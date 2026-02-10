@@ -23,46 +23,66 @@ if ($method === 'GET') :
 		}
 endif;
 	
-	// add new information
-	elseif ($method === 'POST') :
-		$data = json_decode(file_get_contents('php://input'), true):
-		$data_keys = ['name', 'description', 'sku', 'base price'];
-		// this will get the data sent to us
-		
-		foreach ($data_keys as $key) {
-			if(!isset($key) {
-				http_response_code: 400;
-				echo json_encode(['error']);
-			}
-		}
-		$new_id = create_product($data);
-		if($new_id) {
-			http_response_code(200);
-			echo json_encode(['success' ==> true, 'id' ==> $new_id]);
-		
-			else {
-				http_repsonse_code(500);
-				echo json_encode(['error' ==> 'Server Error']);
-			}
-		}
-	
-	elseif($method === 'PUT') {
-	$data = json_decode(file_get_contents('php://input'), true):
-		$data_keys = ['name', 'description', 'sku', 'base price'];
-		// this will get the data sent to us
-		
-		foreach ($data_keys as $key) {
-			if(!isset($key) {
-				http_response_code: 400;
-				echo json_encode(['error' => 'bad reequest', 'details']);
-			}
-		}
-		
-		if(update_product($id, $data) {
-		echo json_encode(['success']);
-		else {
-		
+// add new information (DONE)
+// id if we need these last two for apis
+elseif ($method === 'POST') :
+	// this is data sent to us
+	$data = json_decode(file_get_contents('php://input'), true);
+	// if nothing was sent, will use form data?
+	if (!isset($data)) {
+		$data = $_POST;
 	}
+
+	$data_keys = ['sku', 'description', 'uom', 'piece', 'length', 'width', 'height', 'weight'];
+	foreach ($data_keys as $key) {
+		if (!isset($data[$key])) {
+			http_response_code(400);
+			echo json_encode([
+				'error' => 'Bad Request',
+				'details' => "Missing required field: $key"
+			]);
+			exit;
+		}
+	}
+	$new_id = create_product($data);
+
+	if($new_id) {
+		http_response_code(200);
+		echo json_encode(['success' => true, 'id' => $new_id]);
+	}
+	else {
+		http_repsonse_code(500);
+		echo json_encode(['error' => 'Server Error']);
+	}
+endif;
 		
+	
+elseif($method === 'PUT') :
+	// this is data sent to us
+	$data = json_decode(file_get_contents('php://input'), true);
+	// if nothing was sent, will use form data?
+	if (!isset($data)) {
+		$data = $_POST;
+	}
+	
+	$data_keys = ['sku', 'description', 'uom', 'piece', 'length', 'width', 'height', 'weight'];
+	foreach ($data_keys as $key) {
+		if (!isset($data[$key])) {
+			http_response_code(400);
+			echo json_encode([
+				'error' => 'Bad Request',
+				'details' => "Missing required field: $key"
+			]);
+			exit;
+		}
+	}
+	
+	if(update_product($id, $data)) {
+		echo json_encode(['success' => true]);
+	}
+	else {
+		http_repsonse_code(500);
+		echo json_encode(['error' => 'Server Error']);
+	}	
 endif;
 ?>
