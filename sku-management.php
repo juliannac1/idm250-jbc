@@ -101,8 +101,8 @@ $connection->close();
                     <td><?php echo htmlspecialchars($item_dimension)?></td>
                     <td><?php echo htmlspecialchars($item_weight)?></td>
                     <td>
-                        <a href="product-form.php?id=<?= $product['id'] ?>">Edit</a>
-                        <a href="delete.php?id=<?= $product['id'] ?>" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                        <a class="edit-btn" href="product-form.php?id=<?= $product['id'] ?>">Edit</a>
+                        <a class="delete-btn" href="delete.php?id=<?= $product['id'] ?>" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
                     </td>
                 </tr>
                 <?php
