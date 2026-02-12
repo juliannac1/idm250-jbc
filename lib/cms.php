@@ -2,23 +2,25 @@
 function create_product($data){
     global $connection;
 
-    $sku = $connection -> real_escape_string($data['sku']);
-    $desc = $connection -> real_escape_string($data['description']);
-    $uom = $connection -> real_escape_string($data['uom']);
+    $sku = $connection->real_escape_string($data['sku']);
+    $desc = $connection->real_escape_string($data['description']);
+    $uom = $connection->real_escape_string($data['uom']);
     $piece = (int)$data['piece'];
-    // **Question to ask if length, width, and height should be floatvals?
     $length = (int)$data['length'];
     $width = (int)$data['width'];
     $height = floatval($data['height']);
     $weight = floatval($data['weight']);
 
-    // will insert into the database
-    $stmt = $connection->prepare("INSERT INTO cms_products (sku, description, uom, piece, length, width, height, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $connection->prepare(
+        "INSERT INTO cms_products (sku, description, uom, piece, length, width, height, weight) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+    );
     $stmt->bind_param('sssiiidd', $sku, $desc, $uom, $piece, $length, $width, $height, $weight);
-    // returns the id that is assigned to new product
+
     if($stmt->execute()) {
         return $connection->insert_id;
     } else {
+        error_log("Create product error: " . $stmt->error);
         return false;
     }
 }

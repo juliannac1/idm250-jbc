@@ -5,10 +5,8 @@ $stmt = $connection->prepare("SELECT * FROM cms_products");
 $stmt->execute();
 $result = $stmt->get_result();
 $result_count = $result->num_rows;
-
-$connection->close();
 ?>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -118,3 +116,7 @@ $connection->close();
     </div>
 </body>
 </html>
+
+<?php
+$connection->close();
+?>
