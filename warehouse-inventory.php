@@ -37,8 +37,8 @@ $inventory_amount = $warehouse_inventory['total'];
             <ul class="nav-list">
                 <li class="nav-item"><h5>Dashboard</h5></li>
                 <li class="nav-item"><h5>SKU Management</h5></li>
-                <li class="nav-item nav-item--active"><h5>Internal Inventory</h5></li>
-                <li class="nav-item"><h5>Warehouse Inventory</h5></li>
+                <li class="nav-item"><h5>Internal Inventory</h5></li>
+                <li class="nav-item nav-item--active"><h5>Warehouse Inventory</h5></li>
                 <li class="nav-item"><h5>MPI Records</h5></li>
                 <li class="nav-item"><h5>Order Records</h5></li>
             </ul>
