@@ -109,7 +109,6 @@ $result_count = $result->num_rows;
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 </body>
