@@ -14,7 +14,7 @@ function get_all_orders() {
     }
 }
 
-// get info of a specific order
+// get single order
 function get_order($id) {
     global $connection;
 
@@ -29,7 +29,7 @@ function get_order($id) {
     }
 }
 
-// get SKU details from order items
+// get items with SKU details (unit ID, SKU code, description) the query joins three tables
 function get_order_items($order_id) {
     global $connection;
 
@@ -51,7 +51,7 @@ function get_order_items($order_id) {
     }
 }
 
-// amount of inventory items in an order
+// this counts how many inventory units are in a specific order
 function get_order_item_count($order_id) {
     global $connection;
     
@@ -64,7 +64,7 @@ function get_order_item_count($order_id) {
     return $row['count'];
 }
 
-// amount of orders
+// this counts how many orders exist in total
 function get_order_count() {
     global $connection;
     
@@ -74,7 +74,7 @@ function get_order_count() {
     return $row['count'];
 }
 
-// creates a new order in db
+// creates the header and inserts items
 function create_order($data, $unit_ids) {
     global $connection;
 
@@ -110,7 +110,7 @@ function create_order($data, $unit_ids) {
     return $order_id;
 }
 
-// updating draft orders only 
+// only allows updating draft orders
 function update_order($id, $data, $unit_ids) {
     global $connection;
 
@@ -159,7 +159,7 @@ function update_order($id, $data, $unit_ids) {
     return true;
 }
 
-// deleting draft orders only
+// only allows deleting draft orders
 function delete_order($id) {
     global $connection;
     
@@ -182,10 +182,11 @@ function delete_order($id) {
     return $stmt->execute();
 }
 
-// changes the status (draft, sent, confirmed) if theres a shipped_at date
+// this changes the status (draft, sent, confirmed) with optional shipped_at date
 function update_order_status($id, $status, $shipped_at = null) {
     global $connection;
     
+    // validates status
     $allowed_statuses = ['draft', 'sent', 'confirmed'];
     if (!in_array($status, $allowed_statuses)) {
         return false;
