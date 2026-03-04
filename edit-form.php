@@ -45,12 +45,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- sidebar -->
         <div class="sidebar-nav">
             <ul class="nav-list">
-                <li class="nav-item"><h5>Dashboard</h5></li>
-                <li class="nav-item nav-item--active"><h5>SKU Management</h5></li>
-                <li class="nav-item"><h5>Internal Inventory</h5></li>
-                <li class="nav-item"><h5>Warehouse Inventory</h5></li>
-                <li class="nav-item"><h5>MPI Records</h5></li>
-                <li class="nav-item"><h5>Order Records</h5></li>
+                <li class="nav-item nav-item--active">
+                    <a style="text-decoration: none; color: inherit;" href="sku-management.php"><h5>SKU Management</h5></a>
+                </li>
+                <li class="nav-item">
+                    <a style="text-decoration: none; color: inherit;" href="internal-inventory.php"><h5>Internal Inventory</h5></a>
+                </li>
+                <li class="nav-item">
+                    <a style="text-decoration: none; color: inherit;" href="warehouse-inventory.php"><h5>Warehouse Inventory</h5></a>
+                </li>
+                <li class="nav-item">
+                    <a style="text-decoration: none; color: inherit;" href="mpl-records.php"><h5>MPL Records</h5></a>
+                </li>
+                <li class="nav-item">
+                    <a style="text-decoration: none; color: inherit;" href="order-records.php"><h5>Order Records</h5></a>
+                </li>
             </ul>
         </div>
 
@@ -77,7 +86,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="form-control">
                 <label for="uom">UOM *</label>
-                <input type="text" id="uom" name="uom" value="<?= htmlspecialchars($product['uom'] ?? '') ?>" required>
+                <div style="display: flex; gap: 12px; margin-top: 4px;">
+                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                        <input type="radio" id="uom_pallet" name="uom" value="PALLET" 
+                            <?= (($product['uom'] ?? '') === 'PALLET') ? 'checked' : '' ?> required>
+                        PALLET
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                        <input type="radio" id="uom_bundle" name="uom" value="BUNDLE" 
+                            <?= (($product['uom'] ?? '') === 'BUNDLE') ? 'checked' : '' ?> required>
+                        BUNDLE
+                    </label>
+                </div>
             </div>
 
             <div class="form-control">
